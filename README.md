@@ -1,7 +1,7 @@
 # Twitch MQTT
 ## Get realtime events from Twitch Pub/Sub and Streamlabs SocketIO  and pub it to MQTT for a easier use
 
-![Diagram showing the link between the APIs and the MQTT server] (https://github.com/KraccoonTwitch/twitch_mqtt/blob/master/images/diagram.png?raw=true)
+![Diagram showing the link between the APIs and the MQTT server](https://github.com/KraccoonTwitch/twitch_mqtt/blob/master/images/diagram.png?raw=true)
 
 ## Requirements
 
