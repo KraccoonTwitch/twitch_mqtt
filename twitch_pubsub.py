@@ -30,10 +30,10 @@ def on_message(ws, message):
             reward_id = jsondata['data']['redemption']['reward']['id']
             data = {'reward_id': reward_id, 'username': username}
             publish.single(f"/{twitch_name}/channelpoints", json.dumps(data), hostname="localhost")
-        elif jsonmsg['data']['topic'].startwith("channel-subscribe-events-v1"):
+        elif jsonmsg['data']['topic'].startswith("channel-subscribe-events-v1"):
             print(jsondata)
             username = jsondata['user_name']
-            recipient_name = username if jsondata['is_gift'] else jsondata['recipient_user_name']
+            recipient_name = jsondata['recipient_user_name'] if jsondata['is_gift'] else username
             tier = 1 if jsondata['sub_plan']=="Prime" else int(int(jsondata['sub_plan'])/1000)
             data = {'tier': tier, 'username': username, 'recipient_name': recipient_name}
             publish.single(f"/{twitch_name}/sub", json.dumps(data), hostname="localhost")
