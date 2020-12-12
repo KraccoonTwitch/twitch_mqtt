@@ -30,7 +30,7 @@ def on_message(ws, message):
             username = jsondata['data']['redemption']['user']['login']
             reward_id = jsondata['data']['redemption']['reward']['id']
             message = jsondata['data']['redemption']['user_input'] if 'user_input' in jsondata['data']['redemption'] else ""
-            data = {'reward_id': reward_id, 'username': username, 'message': message},
+            data = {'reward_id': reward_id, 'username': username, 'message': message}
             publish.single(f"/{twitch_name}/channelpoints", json.dumps(data), hostname="localhost")
         elif jsonmsg['data']['topic'].startswith("channel-subscribe-events-v1"):
             username = None if jsondata['context']=="anonsubgift" else jsondata['user_name']
