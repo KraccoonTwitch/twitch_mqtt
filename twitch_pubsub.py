@@ -21,21 +21,23 @@ def on_message(ws, message):
     if jsonmsg['type']=="MESSAGE":
         jsondata = json.loads(jsonmsg['data']['message'])
         if jsonmsg['data']['topic'].startswith("channel-bits-events-v2"):
-            username = jsondata['data']['user_name']
+            username = None if jsondata['data']['is_anonymous'] else jsondata['data']['user_name']
             amount = jsondata['data']['bits_used']
-            data = {'username': username, 'amount': amount}
+            message = jsondata['data']['chat_message'] if 'chat_message' in jsondata['data'] else :""
+            data = {'username': username, 'amount': amount, 'message': message}
             publish.single(f"/{twitch_name}/bits", json.dumps(data), hostname="localhost")
         elif jsonmsg['data']['topic'].startswith("channel-points-channel-v1"):
             username = jsondata['data']['redemption']['user']['login']
             reward_id = jsondata['data']['redemption']['reward']['id']
-            data = {'reward_id': reward_id, 'username': username}
+            message = jsondata['data']['redemption']['user_input'] if 'user_input' in jsondata['data']['redemption'] else :""
+            data = {'reward_id': reward_id, 'username': username, 'message': message},
             publish.single(f"/{twitch_name}/channelpoints", json.dumps(data), hostname="localhost")
         elif jsonmsg['data']['topic'].startswith("channel-subscribe-events-v1"):
-            print(jsondata)
-            username = jsondata['user_name']
+            username = None if jsondata['context']=="anonsubgift" else jsondata['user_name']
             recipient_name = jsondata['recipient_user_name'] if jsondata['is_gift'] else username
             tier = 1 if jsondata['sub_plan']=="Prime" else int(int(jsondata['sub_plan'])/1000)
-            data = {'tier': tier, 'username': username, 'recipient_name': recipient_name}
+            message = jsondata['sub_message']['message'] if 'message' in jsondata['sub_message'] else :""
+            data = {'tier': tier, 'username': username, 'recipient_name': recipient_name, 'message': message}
             publish.single(f"/{twitch_name}/sub", json.dumps(data), hostname="localhost")
         else:
             print(jsondata)

@@ -22,7 +22,8 @@ I used [Mosquitto](https://mosquitto.org/)
 ```json
 {
     "amount": 0,
-    "username": "name"
+    "username": "name",
+    "message": "message"
 }
 ```
 *username is None for anonymous cheer*
@@ -31,7 +32,8 @@ I used [Mosquitto](https://mosquitto.org/)
 ```json
 {
     "reward_id": 0,
-    "username": "name"
+    "username": "name",
+    "message": "message"
 }
 ```
 
@@ -40,7 +42,8 @@ I used [Mosquitto](https://mosquitto.org/)
 {
     "tier": 1,
     "username": "name",
-    "recipient_name": "name"
+    "recipient_name": "name",
+    "message": "message"
 }
 ```
 *recipient_name if different of username ifthis is a gift*
