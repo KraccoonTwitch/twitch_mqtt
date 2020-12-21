@@ -22,7 +22,7 @@ def event(data):
             amount = m['amount']
             currency = m['currency']
             data_to_send = {'username': username, 'amount': amount, 'currency': currency}
-            if m['isTest']:
+            if 'isTest' in m and m['isTest']:
                 print(data_to_send)
             else:
                 publish.single(f"/{twitch_name}/donation", json.dumps(data_to_send), hostname="localhost")
